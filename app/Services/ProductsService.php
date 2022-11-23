@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Product;
+use App\Modules\Core\ResponseCodes;
 use App\Repositories\ProductsRepository;
 use App\Modules\Validators\ProductsValidator;
 
@@ -32,16 +33,26 @@ class ProductsService
 
     public function store(array $data)
     {
+        $this->validator->validateProducts();
         return $this->repository->createProduct($data);
     }
 
-    public function update(array $data)
+    public function update(int $id, array $data)
     {
-        return $this->repository->updateProduct($data);
+        $this->validator->validateUpdateProducts();
+        $query = $this->repository->getProductById($id);
+        $this->repository->updateProduct($id, $data);
+        return $this->repository->getProductById($id);
     }
 
     public function delete(int $id)
     {
-        return $this->repository->deleteProduct($id);
+        $query = $this->repository->deleteProduct($id);
+
+        if ($query === 0) {
+            return ResponseCodes::NOT_FOUND;
+        }
+        
+        return ResponseCodes::SUCCESS;
     }
 }

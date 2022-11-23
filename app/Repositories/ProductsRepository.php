@@ -19,19 +19,18 @@ class ProductsRepository
         return Product::findOrFail($id);
     }
 
-    public function createProduct(Product $product)
+    public function createProduct(array $data)
     {
-        
+        return Product::create($data);
     }
 
-    public function updateProduct(Product $product)
+    public function updateProduct(int $id, array $newData)
     {
-        
+        return Product::whereId($id)->update($newData);
     }
 
     public function deleteProduct(int $id)
     {
-
+        return Product::destroy($id);
     }
-
 }

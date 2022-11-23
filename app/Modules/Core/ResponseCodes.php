@@ -5,25 +5,19 @@ namespace App\Modules\Core;
 abstract class ResponseCodes
 {
     const SUCCESS = [
-        'title'   => 'success',
+        'success' => true,
         'code'    => 200,
         'message' => 'Request has been successfully processed.'
     ];
     
     const NOT_FOUND = [
-        'title'   => 'not_found',
+        'success' => false,
         'code'    => 404,
         'message' => 'Request cannot be located.'
     ];
     
-    const INVALID_ARGUMENTS = [
-        'title'   => 'invalid_argument',
-        'code'    => 404,
-        'message' => 'Invalid arguments. Server failed to process the request.'
-    ];
-    
     const BAD_REQUEST = [
-        'title'   => 'bad_request',
+        'success' => false,
         'code'    => 400,
         'message' => 'Server failed to process the request.'
     ];

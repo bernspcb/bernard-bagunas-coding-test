@@ -51,14 +51,11 @@ class ProductsController
     public function store(Request $request) : JsonResponse
     {
         try {
-            $dataArray = ($request->toArray() !== [])
+            $newData = ($request->toArray() !== [])
                 ? $request->toArray()
                 : $request->json()->all();
-
-            return response()->json(
-                $this->service->update($dataArray),
-                ResponseCodes::SUCCESS['code']
-            );
+            
+            return response()->json($this->service->store($newData));
         } catch (Exception $exception) {
             return response()->json(
                 [
@@ -70,17 +67,14 @@ class ProductsController
         }
     }
 
-    public function update(Request $request) : JsonResponse
+    public function update(int $id, Request $request) : JsonResponse
     {
         try {
-            $dataArray = ($request->toArray() !== [])
+            $newData = ($request->toArray() !== [])
                 ? $request->toArray()
                 : $request->json()->all();
-
-            return response()->json(
-                $this->service->update($dataArray),
-                ResponseCodes::SUCCESS['code']
-            );
+                
+            return response()->json($this->service->update($id, $newData));
         } catch (Exception $exception) {
             return response()->json(
                 [
@@ -95,10 +89,7 @@ class ProductsController
     public function delete(int $id) : JsonResponse
     {
         try {
-            return response()->json(
-                $this->service->delete($id),
-                ResponseCodes::SUCCESS['code']
-            );
+            return response()->json($this->service->delete($id));
         } catch (Exception $exception) {
             return response()->json(
                 [

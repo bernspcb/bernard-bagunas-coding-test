@@ -4,18 +4,24 @@ namespace App\Modules\Validators;
 
 use InvalidArgumentsException;
 
+
 class ProductsValidator
 {
-    public function validateProducts(array $data) : void
+    public function validateProducts() : void
     {
-        $validator = validator($data, [
-            'name'        => 'required|max:255',
+        $validator = request()->validate([
+            'name'        => 'required|string|max:255',
             'description' => 'required|string',
-            'price'       => 'required'
+            'price'       => 'required|numeric'
         ]);
+    }
 
-        if ($validator->fails()) {
-            throw new InvalidArgumentsException(json_encode($validator->errors()->all()));
-        }
+    public function validateUpdateProducts() : void
+    {
+        $validator = request()->validate([
+            'name'        => 'string|max:255',
+            'description' => 'string',
+            'price'       => 'numeric'
+        ]);
     }
 }
