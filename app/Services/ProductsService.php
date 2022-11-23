@@ -3,18 +3,18 @@
 namespace App\Services;
 
 use App\Models\Product;
-use App\Modules\Core\ResponseCodes;
-use App\Repositories\ProductsRepository;
+use App\Modules\Common\ResponseCodes;
 use App\Modules\Validators\ProductsValidator;
+use App\Modules\Interfaces\ProductsRepositoryInterface;
 
 class ProductsService
 {
     private ProductsValidator $validator;
-    private ProductsRepository $repository;
+    private ProductsRepositoryInterface $repository;
 
     public function __construct(
         ProductsValidator $validator,
-        ProductsRepository $repository
+        ProductsRepositoryInterface $repository
     )
     {
         $this->validator = $validator;
@@ -40,19 +40,12 @@ class ProductsService
     public function update(int $id, array $data)
     {
         $this->validator->validateUpdateProducts();
-        $query = $this->repository->getProductById($id);
         $this->repository->updateProduct($id, $data);
         return $this->repository->getProductById($id);
     }
 
     public function delete(int $id)
     {
-        $query = $this->repository->deleteProduct($id);
-
-        if ($query === 0) {
-            return ResponseCodes::NOT_FOUND;
-        }
-        
-        return ResponseCodes::SUCCESS;
+        return $this->repository->deleteProduct($id);
     }
 }

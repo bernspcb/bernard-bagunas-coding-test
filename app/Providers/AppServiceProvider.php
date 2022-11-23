@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Product;
 use Laravel\Sanctum\Sanctum;
+use App\Observers\ProductsObserver;
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,6 +28,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Product::observe(ProductsObserver::class);
     }
 }

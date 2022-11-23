@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Services\ProductsService;
 use Illuminate\Http\JsonResponse;
-use App\Modules\Core\ResponseCodes;
+use App\Modules\Common\ResponseCodes;
+use Illuminate\Support\Facades\Cache;
 
 class ProductsController
 {
@@ -21,7 +22,11 @@ class ProductsController
     public function index() : JsonResponse
     {
         try {
-            return response()->json($this->service->all());
+            $products = Cache::remember('products-page-' . request('page', 1), now()->addMinutes(5), function() {
+                return response()->json($this->service->all());
+            });
+
+            return $products;
         } catch (Exception $exception) {
             return response()->json(
                 [
@@ -36,7 +41,13 @@ class ProductsController
     public function show(int $id) : JsonResponse
     {
         try {
-            return response()->json($this->service->get($id));
+            return response()->json(
+                [
+                    'data'    => $this->service->get($id),
+                    'message' => ResponseCodes::SUCCESS['message']
+                ],
+                ResponseCodes::SUCCESS['code']
+            );
         } catch (Exception $exception) {
             return response()->json(
                 [
@@ -55,7 +66,13 @@ class ProductsController
                 ? $request->toArray()
                 : $request->json()->all();
             
-            return response()->json($this->service->store($newData));
+            return response()->json(
+                [
+                    'data'    => $this->service->store($newData),
+                    'message' => ResponseCodes::CREATED['message']
+                ],
+                ResponseCodes::CREATED['code']
+            );
         } catch (Exception $exception) {
             return response()->json(
                 [
@@ -74,7 +91,13 @@ class ProductsController
                 ? $request->toArray()
                 : $request->json()->all();
                 
-            return response()->json($this->service->update($id, $newData));
+            return response()->json(
+                [
+                    'data'    => $this->service->update($id, $newData),
+                    'message' => ResponseCodes::UPDATED['message']
+                ],
+                ResponseCodes::UPDATED['code']
+            );
         } catch (Exception $exception) {
             return response()->json(
                 [
@@ -89,7 +112,19 @@ class ProductsController
     public function delete(int $id) : JsonResponse
     {
         try {
-            return response()->json($this->service->delete($id));
+            $result = $this->service->delete($id);
+            
+            return response()->json(
+                [
+                    'data'    => ['id' => $id],
+                    'message' => ($result === 1)
+                            ? ResponseCodes::DELETED['message']
+                            : ResponseCodes::BAD_REQUEST['message'] 
+                ],
+                ($result === 1)
+                    ? ResponseCodes::DELETED['code'] 
+                    : ResponseCodes::BAD_REQUEST['code']
+            );
         } catch (Exception $exception) {
             return response()->json(
                 [
