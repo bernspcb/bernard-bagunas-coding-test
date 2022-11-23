@@ -3,36 +3,33 @@
 namespace App\Repositories;
 
 use App\Models\Product;
+use InvalidArgumentException;
 use Illuminate\Support\Facades\DB;
+use App\Modules\Common\ProductsMapper;
 
 class ProductsRepository
 {
-    private $tableName = 'products';
-    private $selectedColumns = [
-        'products.id',
-        'products.name',
-        'products.description',
-        'products.price',
-        'products.created_at AS createdAt',
-        'products.updated_at AS updatedAt'
-    ];
-
-    public function all() : Product
+    public function getAllProducts()
     {
-
+        return Product::paginate(10);
     }
 
-    public function get(int $id) : Product
+    public function getProductById(int $id)
     {
-
+        return Product::findOrFail($id);
     }
 
-    public function update(Product $product) : Product
+    public function createProduct(Product $product)
     {
         
     }
 
-    public function delete(int $id) : Product
+    public function updateProduct(Product $product)
+    {
+        
+    }
+
+    public function deleteProduct(int $id)
     {
 
     }

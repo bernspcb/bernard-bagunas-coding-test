@@ -16,9 +16,9 @@ use App\Http\Controllers\ProductsController;
 */
 
 Route::controller(ProductsController::class)->group(function() {
-    Route::get('/products', 'show');
-    Route::get('/products/:id', 'get');
-    Route::post('/products', 'update');
-    Route::put('/products/:id', 'update');
-    Route::delete('/products/:id', 'delete');
+    Route::get('/products', 'index');
+    Route::get('/products/{id}', 'show');
+    Route::post('/products', 'store');
+    Route::put('/products/{id}', 'update');
+    Route::delete('/products/{id}', 'delete');
 });

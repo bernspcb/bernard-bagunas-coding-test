@@ -1,13 +1,12 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Http\Controllers;
 
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Services\ProductsService;
+use Illuminate\Http\JsonResponse;
 use App\Modules\Core\ResponseCodes;
 
 class ProductsController
@@ -19,15 +18,12 @@ class ProductsController
         $this->service = $service;
     }
 
-    public function show() : Response
+    public function index() : JsonResponse
     {
         try {
-            return new Response(
-                $this->service->all(),
-                ResponseCodes::SUCCESS['code']
-            );
+            return response()->json($this->service->all());
         } catch (Exception $exception) {
-            return new Response(
+            return response()->json(
                 [
                     'exception' => get_class($exception),
                     'error'     => $exception->getMessage()
@@ -37,15 +33,12 @@ class ProductsController
         }
     }
 
-    public function get(int $id) : Response
+    public function show(int $id) : JsonResponse
     {
         try {
-            return new Response(
-                $this->service->get($id),
-                ResponseCodes::SUCCESS['code']
-            );
+            return response()->json($this->service->get($id));
         } catch (Exception $exception) {
-            return new Response(
+            return response()->json(
                 [
                     'exception' => get_class($exception),
                     'error'     => $exception->getMessage()
@@ -55,14 +48,14 @@ class ProductsController
         }
     }
 
-    public function update(Request $request) : Response
+    public function store(Request $request) : JsonResponse
     {
         try {
             $dataArray = ($request->toArray() !== [])
                 ? $request->toArray()
                 : $request->json()->all();
 
-            return new Response(
+            return response()->json(
                 $this->service->update($dataArray),
                 ResponseCodes::SUCCESS['code']
             );
@@ -77,15 +70,37 @@ class ProductsController
         }
     }
 
-    public function delete(int $id) : Response
+    public function update(Request $request) : JsonResponse
     {
         try {
-            return new Response(
+            $dataArray = ($request->toArray() !== [])
+                ? $request->toArray()
+                : $request->json()->all();
+
+            return response()->json(
+                $this->service->update($dataArray),
+                ResponseCodes::SUCCESS['code']
+            );
+        } catch (Exception $exception) {
+            return response()->json(
+                [
+                    'exception' => get_class($exception),
+                    'error'     => $exception->getMessage()
+                ],
+                ResponseCodes::BAD_REQUEST['code']
+            );
+        }
+    }
+
+    public function delete(int $id) : JsonResponse
+    {
+        try {
+            return response()->json(
                 $this->service->delete($id),
                 ResponseCodes::SUCCESS['code']
             );
         } catch (Exception $exception) {
-            return new Response(
+            return response()->json(
                 [
                     'exception' => get_class($exception),
                     'error'     => $exception->getMessage()
