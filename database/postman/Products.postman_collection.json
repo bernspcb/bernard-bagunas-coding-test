@@ -121,7 +121,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"test asd\"\r\n}",
+					"raw": "{\r\n    \"name\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse dictum elit sed lobortis dignissim. Etiam ultricies diam vel venenatis aliquet. Integer placerat ex sollicitudin dui consequat laoreet. Donec sed rutrum elit. Nullam finibus nisl ac am1.\",\r\n    \"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\",\r\n    \"price\": 20.897\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

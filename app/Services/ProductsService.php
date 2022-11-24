@@ -39,7 +39,7 @@ class ProductsService
 
     public function update(int $id, array $data)
     {
-        $this->validator->validateUpdateProducts();
+        $this->validator->validateProducts();
         $this->repository->updateProduct($id, $data);
         return $this->repository->getProductById($id);
     }
