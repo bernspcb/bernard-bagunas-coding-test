@@ -4,7 +4,7 @@ namespace App\Modules\Interfaces;
 
 interface ProductsRepositoryInterface
 {
-    public function getAllProducts();
+    public function getAllProducts(int $limit);
 
     public function getProductById(int $id);
 

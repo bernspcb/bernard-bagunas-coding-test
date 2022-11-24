@@ -13,7 +13,7 @@ class ProductsTest extends TestCase
 {
     public function test_if_all_products_is_success()
     {
-        $data = (new ProductsController(new ProductsService(new ProductsValidator, new ProductsRepository)))->index();
+        $data = (new ProductsController(new ProductsService(new ProductsRepository, new ProductsValidator)))->index();
         $this->assertNotEmpty($data);
     }
 
@@ -25,7 +25,7 @@ class ProductsTest extends TestCase
             'price'       => 999
         ]);
 
-        $data = (new ProductsController(new ProductsService(new ProductsValidator, new ProductsRepository)))->show($newProduct->id);
+        $data = (new ProductsController(new ProductsService(new ProductsRepository, new ProductsValidator)))->show($newProduct->id);
         $this->assertNotEmpty($data);
     }
 
@@ -67,7 +67,7 @@ class ProductsTest extends TestCase
             'price'       => 999
         ]);
         
-        $data = $this->call('DELETE', 'api/products/' . $product->id);
+        $data = (new ProductsController(new ProductsService(new ProductsRepository, new ProductsValidator)))->delete($product->id);;
         $this->assertNotEmpty($data);
     }
 }

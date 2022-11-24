@@ -47,10 +47,14 @@ class ProductsTest extends TestCase
         ];
 
         $this->json('POST', 'api/products', $product, ['Accept' => 'application/json'])
-            ->assertStatus(400)
+            ->assertStatus(422)
             ->assertJson([
-                'exception' => "Illuminate\\Validation\\ValidationException",
-                'error'     => 'The name field is required.'
+                'message' => "The name field is required.",
+                "errors"  => [
+                        "name" => [
+                            "The name field is required."
+                    ]
+                ]
             ]);
     }
 
@@ -63,10 +67,14 @@ class ProductsTest extends TestCase
         ];
 
         $this->json('POST', 'api/products', $product, ['Accept' => 'application/json'])
-            ->assertStatus(400)
+            ->assertStatus(422)
             ->assertJson([
-                'exception' => "Illuminate\\Validation\\ValidationException",
-                'error'     => 'The name must not be greater than 255 characters.'
+                "message" => "The name must not be greater than 255 characters.",
+                "errors"  => [
+                        "name" => [
+                            "The name must not be greater than 255 characters."
+                    ]
+                ]
             ]);
     }
 
@@ -78,10 +86,14 @@ class ProductsTest extends TestCase
         ];
 
         $this->json('POST', 'api/products', $product, ['Accept' => 'application/json'])
-            ->assertStatus(400)
+            ->assertStatus(422)
             ->assertJson([
-                'exception' => "Illuminate\\Validation\\ValidationException",
-                'error'     => 'The description field is required.'
+                'message' => "The description field is required.",
+                "errors"  => [
+                        "description" => [
+                            "The description field is required."
+                    ]
+                ]
             ]);
     }
 
@@ -93,10 +105,14 @@ class ProductsTest extends TestCase
         ];
 
         $this->json('POST', 'api/products', $product, ['Accept' => 'application/json'])
-            ->assertStatus(400)
+            ->assertStatus(422)
             ->assertJson([
-                'exception' => "Illuminate\\Validation\\ValidationException",
-                'error'     => 'The price field is required.'
+                'message' => "The price field is required.",
+                "errors"  => [
+                        "price" => [
+                            "The price field is required."
+                    ]
+                ]
             ]);
     }
 
@@ -109,10 +125,14 @@ class ProductsTest extends TestCase
         ];
 
         $this->json('POST', 'api/products', $product, ['Accept' => 'application/json'])
-            ->assertStatus(400)
+            ->assertStatus(422)
             ->assertJson([
-                'exception' => "Illuminate\\Validation\\ValidationException",
-                'error'     => 'The price must be a number.'
+                'message' => "The price must be a number.",
+                "errors"  => [
+                        "price" => [
+                            "The price must be a number."
+                    ]
+                ]
             ]);
     }
 
@@ -152,10 +172,14 @@ class ProductsTest extends TestCase
         ];
 
         $this->json('PUT', 'api/products/' . $product->id, $newProductData, ['Accept' => 'application/json'])
-            ->assertStatus(400)
+            ->assertStatus(422)
             ->assertJson([
-                'exception' => "Illuminate\\Validation\\ValidationException",
-                'error'     => 'The name field is required.'
+                'message' => "The name field is required.",
+                "errors"  => [
+                        "name" => [
+                            "The name field is required."
+                    ]
+                ]
             ]);
     }
 
@@ -174,10 +198,14 @@ class ProductsTest extends TestCase
         ];
 
         $this->json('PUT', 'api/products/' . $product->id, $newProductData, ['Accept' => 'application/json'])
-            ->assertStatus(400)
+            ->assertStatus(422)
             ->assertJson([
-                'exception' => "Illuminate\\Validation\\ValidationException",
-                'error'     => 'The name must not be greater than 255 characters.'
+                'message' => "The name must not be greater than 255 characters.",
+                "errors"  => [
+                        "name" => [
+                            "The name must not be greater than 255 characters."
+                    ]
+                ]
             ]);
     }
 
@@ -195,10 +223,14 @@ class ProductsTest extends TestCase
         ];
 
         $this->json('PUT', 'api/products/' . $product->id, $newProductData, ['Accept' => 'application/json'])
-            ->assertStatus(400)
+            ->assertStatus(422)
             ->assertJson([
-                'exception' => "Illuminate\\Validation\\ValidationException",
-                'error'     => 'The description field is required.'
+                'message' => "The description field is required.",
+                "errors"  => [
+                        "description" => [
+                            "The description field is required."
+                    ]
+                ]
             ]);
     }
 
@@ -216,10 +248,14 @@ class ProductsTest extends TestCase
         ];
 
         $this->json('PUT', 'api/products/' . $product->id, $newProductData, ['Accept' => 'application/json'])
-            ->assertStatus(400)
+            ->assertStatus(422)
             ->assertJson([
-                'exception' => "Illuminate\\Validation\\ValidationException",
-                'error'     => 'The price field is required.'
+                'message' => "The price field is required.",
+                "errors"  => [
+                        "price" => [
+                            "The price field is required."
+                    ]
+                ]
             ]);
     }
 
@@ -238,10 +274,14 @@ class ProductsTest extends TestCase
         ];
 
         $this->json('PUT', 'api/products/' . $product->id, $newProductData, ['Accept' => 'application/json'])
-            ->assertStatus(400)
+            ->assertStatus(422)
             ->assertJson([
-                'exception' => "Illuminate\\Validation\\ValidationException",
-                'error'     => 'The price must be a number.'
+                'message' => "The price must be a number.",
+                "errors"  => [
+                        "price" => [
+                            "The price must be a number."
+                    ]
+                ]
             ]);
     }
 

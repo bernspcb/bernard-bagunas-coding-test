@@ -2,16 +2,15 @@
 
 namespace App\Repositories;
 
-use App\Modules\Interfaces\ProductsRepositoryInterface;
 use App\Models\Product;
-use InvalidArgumentException;
 use Illuminate\Support\Facades\DB;
+use App\Modules\Interfaces\ProductsRepositoryInterface;
 
 class ProductsRepository implements ProductsRepositoryInterface
 {
-    public function getAllProducts()
+    public function getAllProducts($limit)
     {
-        return Product::paginate(10);
+        return Product::paginate($limit);
     }
 
     public function getProductById(int $id)
