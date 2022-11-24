@@ -7,9 +7,7 @@ use Illuminate\Http\JsonResponse;
 
 class ProductsController
 {
-    private ProductsService $service;
-
-    public function __construct(ProductsService $service)
+    public function __construct(private ProductsService $service)
     {
         $this->service = $service;
     }

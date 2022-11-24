@@ -9,13 +9,9 @@ use Illuminate\Support\Facades\Cache;
 
 class ProductsService
 {
-    private ProductsRepositoryInterface $repository;
-    
-    private ProductsValidator $validator;
-
     public function __construct(
-        ProductsRepositoryInterface $repository,
-        ProductsValidator $validator
+        private ProductsRepositoryInterface $repository,
+        private ProductsValidator $validator
     )
     {
         $this->repository = $repository;
