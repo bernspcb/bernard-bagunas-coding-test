@@ -25,15 +25,7 @@ class ProductsService
     public function all()
     {
         try {
-            if (request('limit') !== null) {
-                return $this->repository->getAllProducts(request('limit'));
-            }
-
-            $products = Cache::remember('products-page-' . request('page', 1), now()->addMinutes(5), function() {
-                return $this->repository->getAllProducts(request('limit', 10));
-            });
-
-            return $products;
+            return $this->repository->getAllProducts(request('limit', 10));
         } catch (Exception $exception) {
             return [
                 'exception' => get_class($exception),
@@ -45,9 +37,13 @@ class ProductsService
 
     public function get(int $id)
     {
+        $product = Cache::remember('product-' . $id, now()->addMinutes(5), function() {
+            return $this->repository->getProductById(request('id'));
+        });
+
         try {
             return [
-                'data'    => $this->repository->getProductById($id),
+                'data'    => $product,
                 'message' => ResponseCodes::SUCCESS['message'],
                 'code'    => ResponseCodes::SUCCESS['code']
             ];

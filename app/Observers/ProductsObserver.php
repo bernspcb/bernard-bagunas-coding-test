@@ -42,8 +42,8 @@ class ProductsObserver
 
     private function clearCache()
     {
-        for ($page = 1; $page <= 100; $page++) {
-            $key = 'products-page-' . $page;
+        for ($productId = 1; $productId <= 100; $productId++) {
+            $key = 'product-' . $productId;
             
             if (Cache::has($key)) {
                 Cache::forget($key);
